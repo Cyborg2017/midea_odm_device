@@ -1,0 +1,5 @@
+{
+    "name": "Midea ODM Device",
+    "render_readme": true,
+    "homeassistant": "2025.12.4"
+}

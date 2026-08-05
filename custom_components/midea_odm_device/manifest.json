@@ -1,0 +1,10 @@
+{
+  "domain": "midea_odm_device",
+  "name": "美的慧选设备",
+  "codeowners": ["@Cyborg2017"],
+  "config_flow": true,
+  "documentation": "https://github.com/Cyborg2017/midea_odm_device#readme",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/Cyborg2017/midea_odm_device/issues",
+  "version": "v26.8.0"
+}

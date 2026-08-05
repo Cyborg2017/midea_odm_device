@@ -1,0 +1,140 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Midea ODM Device",
+                "description": "Enter your Midea Meiju account credentials",
+                "data": {
+                    "account": "Phone / Account",
+                    "password": "Password"
+                }
+            },
+            "select_homes": {
+                "title": "Select Homes",
+                "description": "Select the homes to discover devices from",
+                "data": {
+                    "selected_homes": "Homes"
+                }
+            },
+            "select_devices": {
+                "title": "Select Devices",
+                "description": "Found {devices_count} supported device(s). Select the devices you want to add.",
+                "data": {
+                    "selected_devices": "Devices"
+                }
+            },
+            "confirm": {
+                "title": "Confirm Setup",
+                "description": "Homes: {homes_count} | Devices: {devices_count}\n\n{device_list}\n\n{download_summary}"
+            }
+        },
+        "error": {
+            "login_failed": "Login failed, please check your credentials",
+            "no_homes": "No homes found",
+            "no_homes_selected": "Please select at least one home",
+            "home_already_configured": "This home is already configured",
+            "no_supported_devices": "No supported devices found",
+            "no_devices_selected": "Please select at least one device"
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "Midea ODM Device Options",
+                "description": "Configure options",
+                "data": {
+                    "option": "Option"
+                }
+            },
+            "change_credentials": {
+                "title": "Change Credentials",
+                "description": "Update your Midea account credentials",
+                "data": {
+                    "account": "Phone / Account",
+                    "password": "Password"
+                }
+            },
+            "change_scan_interval": {
+                "title": "Scan Interval",
+                "description": "Configure device data update interval",
+                "data": {
+                    "scan_interval": "Scan Interval (seconds)"
+                }
+            }
+        }
+    },
+    "entity": {
+        "sensor": {
+            "indoor_temperature": { "name": "Temperature" },
+            "humidity": { "name": "Humidity" },
+            "co2_value": { "name": "CO2" },
+            "pm10_value": { "name": "PM10" },
+            "pm25_value": { "name": "PM2.5" },
+            "battery_level": { "name": "Battery" },
+            "current_water_temperature": { "name": "Current Water Temperature" },
+            "today_feed_count": { "name": "Today Feed Count" },
+            "filter_remaining_days_slot1": { "name": "Physical Filter Remaining Days" },
+            "filter_remaining_percent_slot1": { "name": "Physical Filter Remaining Percent" },
+            "filter_remaining_days_slot2": { "name": "Biological Filter Remaining Days" },
+            "filter_remaining_percent_slot2": { "name": "Biological Filter Remaining Percent" },
+            "filter_install_time_slot1": { "name": "Physical Filter Install Time" },
+            "filter_install_time_slot2": { "name": "Biological Filter Install Time" }
+        },
+        "binary_sensor": {
+            "water_temperature_state": { "name": "Water Temperature State" }
+        },
+        "switch": {
+            "power": { "name": "Power" },
+            "water_pump_switch": { "name": "Water Pump" },
+            "feed_protection_switch": { "name": "Feed Protection" },
+            "indicator_light_switch": { "name": "Indicator Light" },
+            "silent_switch": { "name": "Silent Mode" },
+            "water_pump_disconnect_alert_switch": { "name": "Water Pump Disconnect Alert" },
+            "child_lock_switch": { "name": "Child Lock" },
+            "motor_reverse": { "name": "Motor Reverse" },
+            "manual_pull_mode": { "name": "Manual Pull Mode" }
+        },
+        "number": {
+            "feed_cycle": { "name": "Feed Cycle" },
+            "water_temperature_min": { "name": "Water Temperature Min" },
+            "water_temperature_max": { "name": "Water Temperature Max" }
+        },
+        "time": {
+            "silent_start_time": { "name": "Silent Start Time" },
+            "silent_end_time": { "name": "Silent End Time" }
+        },
+        "select": {
+            "water_pump_disconnect_delay_time": { "name": "Water Pump Disconnect Delay Time" },
+            "water_pump_pause_time": { "name": "Feed Protection Time" },
+            "motor_speed": { "name": "Motor Speed" }
+        },
+        "light": {
+            "light": { "name": "Light" }
+        },
+        "button": {
+            "manual_feed": { "name": "Manual Feed" }
+        },
+        "cover": {
+            "curtain": { "name": "Curtain" }
+        }
+    },
+    "common": {
+        "delay_10s": "10s",
+        "delay_30s": "30s",
+        "delay_1min": "1min",
+        "delay_5min": "5min",
+        "pause_3min": "3min",
+        "pause_5min": "5min",
+        "pause_10min": "10min",
+        "pause_15min": "15min",
+        "motor_speed_silent": "Silent",
+        "motor_speed_medium": "Medium",
+        "motor_speed_fast": "Fast",
+        "light_scene_0": "Brilliant Sun",
+        "light_scene_1": "Silver Screen",
+        "light_scene_2": "Antarctic Sea",
+        "light_scene_3": "Deep Sea Hot Spring",
+        "light_scene_4": "Photosynthesis",
+        "light_scene_5": "Rainbow Flow"
+    }
+}

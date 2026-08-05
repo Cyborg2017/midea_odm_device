@@ -1,0 +1,140 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "美的慧选设备",
+                "description": "请输入您的美的美居账号和密码",
+                "data": {
+                    "account": "手机号/账号",
+                    "password": "密码"
+                }
+            },
+            "select_homes": {
+                "title": "选择家庭",
+                "description": "选择要发现设备的家庭",
+                "data": {
+                    "selected_homes": "家庭"
+                }
+            },
+            "select_devices": {
+                "title": "选择设备",
+                "description": "发现 {devices_count} 个支持的设备，请勾选要添加的设备",
+                "data": {
+                    "selected_devices": "设备"
+                }
+            },
+            "confirm": {
+                "title": "确认设置",
+                "description": "家庭: {homes_count} | 设备: {devices_count}\n\n{device_list}\n\n{download_summary}"
+            }
+        },
+        "error": {
+            "login_failed": "登录失败，请检查账号密码",
+            "no_homes": "未找到家庭",
+            "no_homes_selected": "请至少选择一个家庭",
+            "home_already_configured": "该家庭已配置",
+            "no_supported_devices": "未发现支持的设备",
+            "no_devices_selected": "请至少选择一个设备"
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "美的慧选设备选项",
+                "description": "配置选项",
+                "data": {
+                    "option": "选项"
+                }
+            },
+            "change_credentials": {
+                "title": "修改账号密码",
+                "description": "更新美的美居账号密码",
+                "data": {
+                    "account": "手机号/账号",
+                    "password": "密码"
+                }
+            },
+            "change_scan_interval": {
+                "title": "刷新间隔",
+                "description": "配置设备数据更新间隔",
+                "data": {
+                    "scan_interval": "数据更新间隔（秒）"
+                }
+            }
+        }
+    },
+    "entity": {
+        "sensor": {
+            "indoor_temperature": { "name": "温度" },
+            "humidity": { "name": "湿度" },
+            "co2_value": { "name": "CO2" },
+            "pm10_value": { "name": "PM10" },
+            "pm25_value": { "name": "PM2.5" },
+            "battery_level": { "name": "电量" },
+            "current_water_temperature": { "name": "当前水温" },
+            "today_feed_count": { "name": "今日投喂份数" },
+            "filter_remaining_days_slot1": { "name": "物理滤材剩余天数" },
+            "filter_remaining_percent_slot1": { "name": "物理滤材剩余比例" },
+            "filter_remaining_days_slot2": { "name": "生化滤材剩余天数" },
+            "filter_remaining_percent_slot2": { "name": "生化滤材剩余比例" },
+            "filter_install_time_slot1": { "name": "物理滤材安装时间" },
+            "filter_install_time_slot2": { "name": "生化滤材安装时间" }
+        },
+        "binary_sensor": {
+            "water_temperature_state": { "name": "水温状态" }
+        },
+        "switch": {
+            "power": { "name": "鱼缸总开关" },
+            "water_pump_switch": { "name": "水泵开关" },
+            "feed_protection_switch": { "name": "喂食保护" },
+            "indicator_light_switch": { "name": "指示灯" },
+            "silent_switch": { "name": "免打扰模式" },
+            "water_pump_disconnect_alert_switch": { "name": "水泵断开提醒" },
+            "child_lock_switch": { "name": "童锁" },
+            "motor_reverse": { "name": "电机反转" },
+            "manual_pull_mode": { "name": "手拉启动" }
+        },
+        "number": {
+            "feed_cycle": { "name": "断网喂养周期" },
+            "water_temperature_min": { "name": "水温提醒(最低)" },
+            "water_temperature_max": { "name": "水温提醒(最高)" }
+        },
+        "time": {
+            "silent_start_time": { "name": "免打扰开始时间" },
+            "silent_end_time": { "name": "免打扰结束时间" }
+        },
+        "select": {
+            "water_pump_disconnect_delay_time": { "name": "水泵断开延迟提醒时间" },
+            "water_pump_pause_time": { "name": "喂食保护时间" },
+            "motor_speed": { "name": "电机速度" }
+        },
+        "light": {
+            "light": { "name": "灯光" }
+        },
+        "button": {
+            "manual_feed": { "name": "手动喂食" }
+        },
+        "cover": {
+            "curtain": { "name": "窗帘" }
+        }
+    },
+    "state": {
+        "delay_10s": "10秒",
+        "delay_30s": "30秒",
+        "delay_1min": "1分钟",
+        "delay_5min": "5分钟",
+        "pause_3min": "3分钟",
+        "pause_5min": "5分钟",
+        "pause_10min": "10分钟",
+        "pause_15min": "15分钟",
+        "motor_speed_silent": "静音",
+        "motor_speed_medium": "中速",
+        "motor_speed_fast": "快速",
+        "light_scene_0": "熔光炫日",
+        "light_scene_1": "银幕白璧",
+        "light_scene_2": "南极冰海",
+        "light_scene_3": "深海热泉",
+        "light_scene_4": "光合作用",
+        "light_scene_5": "彩虹流光"
+    }
+}

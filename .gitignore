@@ -1,0 +1,62 @@
+# Home Assistant 配置/运行产物
+.HA_VERSION
+home-assistant.log*
+home-assistant_v2.db*
+.storage/
+.cloud/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 虚拟环境
+venv/
+.venv/
+env/
+ENV/
+.python-version
+
+# 测试
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# IDE / 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# HACS / 集成产物
+custom_components/midea_odm_device/__pycache__/
+custom_components/midea_odm_device/*/__pycache__/
+*.zip
