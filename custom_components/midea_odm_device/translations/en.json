@@ -77,8 +77,8 @@
             "filter_remaining_percent_slot1": { "name": "Physical Filter Remaining Percent" },
             "filter_remaining_days_slot2": { "name": "Biological Filter Remaining Days" },
             "filter_remaining_percent_slot2": { "name": "Biological Filter Remaining Percent" },
-            "filter_install_time_slot1": { "name": "Physical Filter Install Time" },
-            "filter_install_time_slot2": { "name": "Biological Filter Install Time" }
+            "filter_install_time_slot1": { "name": "Physical Filter Last Replacement Time" },
+            "filter_install_time_slot2": { "name": "Biological Filter Last Replacement Time" }
         },
         "binary_sensor": {
             "water_temperature_state": { "name": "Water Temperature State" }

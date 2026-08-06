@@ -70,14 +70,14 @@ DEVICE_MAPPING = {
                 "filter_install_time_slot1": {
                     "translation_key": "filter_install_time_slot1",
                     "section": "filter_materials",
-                    "field": "installationTime",
+                    "field": "lastReplacementTime",
                     "list_match": {"slot": 1},
                     "icon": "mdi:calendar-check"
                 },
                 "filter_install_time_slot2": {
                     "translation_key": "filter_install_time_slot2",
                     "section": "filter_materials",
-                    "field": "installationTime",
+                    "field": "lastReplacementTime",
                     "list_match": {"slot": 2},
                     "icon": "mdi:calendar-check"
                 }
