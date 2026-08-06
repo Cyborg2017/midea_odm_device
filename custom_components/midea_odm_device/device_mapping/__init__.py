@@ -17,6 +17,7 @@ from typing import Any
 _LOGGER = logging.getLogger(__name__)
 
 _MODULE_CACHE: dict[int, Any] = {}
+_MODULE_REGISTRY: dict[int, str] | None = None
 
 
 def _parse_device_type(module_name: str) -> int | None:
@@ -50,6 +51,10 @@ def _infer_protocol(module: Any) -> str:
 
 def _scan_modules() -> dict[int, str]:
     """自动扫描所有 T0x*.py 模块，构建 device_type -> module_name 映射。"""
+    global _MODULE_REGISTRY
+    if _MODULE_REGISTRY is not None:
+        return _MODULE_REGISTRY
+
     result: dict[int, str] = {}
     for finder, name, ispkg in pkgutil.iter_modules(__path__):
         if not (name.startswith("T0x") or name.startswith("T0X")):
@@ -58,7 +63,14 @@ def _scan_modules() -> dict[int, str]:
         if device_type is None:
             continue
         result[device_type] = name
+    _MODULE_REGISTRY = result
     return result
+
+
+def load_all_modules() -> None:
+    """在线程池中调用，预扫描并加载所有设备映射模块。"""
+    for device_type in _scan_modules():
+        _load_module(device_type)
 
 
 def _load_module(device_type: int) -> Any | None:

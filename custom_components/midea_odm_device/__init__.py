@@ -48,7 +48,12 @@ from .core.cloud import get_midea_cloud
 from .core.device import MiedaDevice
 from .core.api import MideaV2ThingApi
 from .data_coordinator import MideaDataUpdateCoordinator, MideaThingDataCoordinator
-from .device_mapping import get_device_protocol, get_specific_endpoints, load_mapping
+from .device_mapping import (
+    get_device_protocol,
+    get_specific_endpoints,
+    load_all_modules,
+    load_mapping,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -93,6 +98,9 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
 
     if device_type != CONF_ACCOUNT:
         return False
+
+    # pkgutil 扫描目录和动态导入模块会执行阻塞 I/O，放到 executor 中完成。
+    await hass.async_add_executor_job(load_all_modules)
 
     account = config_entry.data.get(CONF_ACCOUNT)
     password = config_entry.data.get(CONF_PASSWORD)
