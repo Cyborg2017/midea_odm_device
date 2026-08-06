@@ -80,7 +80,7 @@ class MideaEntity(CoordinatorEntity[MideaDataUpdateCoordinator], Entity):
         self._entity_key = entity_key
         self._config = config or {}
 
-        self._attr_unique_id = f"{device.device_id}_{safe_key(entity_key)}".lower()
+        self._attr_unique_id = f"midea_{device.device_id}_{entity_key}"
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, str(device.device_id))},
             model=device.model,

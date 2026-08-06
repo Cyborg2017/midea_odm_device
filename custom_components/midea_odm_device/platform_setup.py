@@ -36,6 +36,18 @@ RestSensorFactory = Callable[
 ]
 
 
+def _set_entity_identity(entity: Any, platform: Platform, device_id: Any, entity_key: str) -> None:
+    """按集成约定设置实体唯一 ID 和实体 ID。"""
+    platform_name = platform.value
+    entity._attr_unique_id = (
+        f"{platform_name}.midea_{device_id}_{entity_key}"
+        if platform_name
+        else f"midea_{device_id}_{entity_key}"
+    )
+    if platform_name:
+        entity.entity_id = f"{platform_name}.midea_{device_id}_{entity_key.lower()}"
+
+
 async def async_setup_platform_entities(
     hass: HomeAssistant,
     config_entry: ConfigEntry,
@@ -78,6 +90,7 @@ async def async_setup_platform_entities(
                 entity_key, ecfg,
             )
             if entity is not None:
+                _set_entity_identity(entity, platform, device_id, entity_key)
                 entities.append(entity)
 
     async_add_entities(entities)
@@ -121,6 +134,7 @@ async def async_setup_thing_entities(
             else:
                 entity = thing_entity_factory(coordinator, entity_key, ecfg)
             if entity is not None:
+                _set_entity_identity(entity, platform, appliance_code, entity_key)
                 entities.append(entity)
 
         async_add_entities(entities)
