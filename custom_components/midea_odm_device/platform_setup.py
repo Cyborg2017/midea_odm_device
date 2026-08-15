@@ -20,6 +20,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN
 from .device_mapping import load_mapping
+from .midea_entity import safe_key
 
 
 EntityFactory = Callable[
@@ -45,7 +46,7 @@ def _set_entity_identity(entity: Any, platform: Platform, device_id: Any, entity
         else f"midea_{device_id}_{entity_key}"
     )
     if platform_name:
-        entity.entity_id = f"{platform_name}.midea_{device_id}_{entity_key.lower()}"
+        entity.entity_id = f"{platform_name}.midea_{device_id}_{safe_key(entity_key)}"
 
 
 async def async_setup_platform_entities(
