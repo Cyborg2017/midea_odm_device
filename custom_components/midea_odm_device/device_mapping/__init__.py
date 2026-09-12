@@ -93,6 +93,14 @@ def _load_module(device_type: int) -> Any | None:
         return None
 
 
+def get_supported_sn8(device_type: int) -> set[str] | None:
+    """获取设备类型限制的 SN8 白名单，未限制时返回 None。"""
+    module = _load_module(device_type)
+    if not module:
+        return None
+    return getattr(module, "SUPPORTED_SN8", None) or None
+
+
 def load_mapping(
     device_type: int,
     sn8: str = "",
@@ -107,6 +115,15 @@ def load_mapping(
 
     module = _load_module(device_type)
     if not module:
+        return {}
+
+    # SN8 whitelist restriction declared by the mapping module
+    supported_sn8 = getattr(module, "SUPPORTED_SN8", None)
+    if supported_sn8 and sn8 not in supported_sn8:
+        _LOGGER.debug(
+            "设备类型 0x%02X 仅支持 SN8 %s，跳过 sn8=%s",
+            device_type, supported_sn8, sn8,
+        )
         return {}
 
     device_mappings: dict = getattr(module, "DEVICE_MAPPING", {}) or {}

@@ -30,7 +30,7 @@ from .const import (
     STORAGE_PLUGIN_PATH,
 )
 from .core.cloud import get_midea_cloud
-from .device_mapping import get_all_device_types
+from .device_mapping import get_all_device_types, get_supported_sn8
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -81,15 +81,23 @@ class ConfigFlow(config_entries.ConfigFlow, domain="midea_odm_device"):
         supported: dict = {}
         for appliance_code, info in appliances_info.items():
             device_type = info.get("type")
-            if device_type in _get_supported_device_types():
-                supported[appliance_code] = info
-                _LOGGER.info(
-                    f"[美的慧选设备] 发现支持的设备: {info.get('name')} (type=0x{device_type:02X})"
-                )
-            else:
+            if device_type not in _get_supported_device_types():
                 _LOGGER.debug(
                     f"[美的慧选设备] 跳过不支持的设备: {info.get('name')} (type={device_type})"
                 )
+                continue
+            sn8 = info.get("sn8") or ""
+            allowed_sn8 = get_supported_sn8(device_type)
+            if allowed_sn8 and sn8 not in allowed_sn8:
+                _LOGGER.debug(
+                    f"[美的慧选设备] 跳过不支持的设备: {info.get('name')} "
+                    f"(type=0x{device_type:02X}, sn8={sn8})"
+                )
+                continue
+            supported[appliance_code] = info
+            _LOGGER.info(
+                f"[美的慧选设备] 发现支持的设备: {info.get('name')} (type=0x{device_type:02X})"
+            )
         return supported
 
     async def async_step_user(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:

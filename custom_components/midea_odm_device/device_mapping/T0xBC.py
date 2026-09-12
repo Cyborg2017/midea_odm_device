@@ -2,6 +2,9 @@
 from homeassistant.const import Platform, CONCENTRATION_PARTS_PER_MILLION, CONCENTRATION_MICROGRAMS_PER_CUBIC_METER, UnitOfTemperature
 from homeassistant.components.sensor import SensorStateClass, SensorDeviceClass
 
+# Only devices with these SN8 codes are supported
+SUPPORTED_SN8 = {"ECGDN1MD"}
+
 DEVICE_MAPPING = {
     "default": {
         "manufacturer": "Midea",
