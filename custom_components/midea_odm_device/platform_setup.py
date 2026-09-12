@@ -20,7 +20,16 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN
 from .device_mapping import load_mapping
-from .midea_entity import safe_key
+from .midea_entity import (
+    MideaDiagnosticBinarySensor,
+    MideaDiagnosticSensor,
+    MideaThingDiagnosticBinarySensor,
+    MideaThingDiagnosticSensor,
+    safe_key,
+)
+
+# Built-in diagnostic info keys exposed as sensor entities on the device page
+DIAGNOSTIC_SENSOR_KEYS = ("sn", "sn8", "device_id")
 
 
 EntityFactory = Callable[
@@ -94,6 +103,18 @@ async def async_setup_platform_entities(
                 _set_entity_identity(entity, platform, device_id, entity_key)
                 entities.append(entity)
 
+        # Built-in diagnostic entities for the device page
+        if coordinator is not None:
+            if platform == Platform.SENSOR:
+                for diag_key in DIAGNOSTIC_SENSOR_KEYS:
+                    entity = MideaDiagnosticSensor(coordinator, device, diag_key)
+                    _set_entity_identity(entity, platform, device_id, diag_key)
+                    entities.append(entity)
+            elif platform == Platform.BINARY_SENSOR:
+                entity = MideaDiagnosticBinarySensor(coordinator, device)
+                _set_entity_identity(entity, platform, device_id, "online")
+                entities.append(entity)
+
     async_add_entities(entities)
 
 
@@ -137,6 +158,17 @@ async def async_setup_thing_entities(
             if entity is not None:
                 _set_entity_identity(entity, platform, appliance_code, entity_key)
                 entities.append(entity)
+
+        # Built-in diagnostic entities for the device page
+        if platform == Platform.SENSOR:
+            for diag_key in DIAGNOSTIC_SENSOR_KEYS:
+                entity = MideaThingDiagnosticSensor(coordinator, diag_key)
+                _set_entity_identity(entity, platform, appliance_code, diag_key)
+                entities.append(entity)
+        elif platform == Platform.BINARY_SENSOR:
+            entity = MideaThingDiagnosticBinarySensor(coordinator)
+            _set_entity_identity(entity, platform, appliance_code, "online")
+            entities.append(entity)
 
         async_add_entities(entities)
 

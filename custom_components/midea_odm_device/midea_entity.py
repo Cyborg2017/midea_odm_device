@@ -14,14 +14,23 @@ from __future__ import annotations
 import logging
 from typing import Any
 
+from homeassistant.components.binary_sensor import BinarySensorDeviceClass, BinarySensorEntity
+from homeassistant.components.sensor import SensorEntity
 from homeassistant.helpers.device_registry import DeviceInfo
-from homeassistant.helpers.entity import Entity
+from homeassistant.helpers.entity import Entity, EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
 from .data_coordinator import MideaDataUpdateCoordinator, MideaThingDataCoordinator
 
 _LOGGER = logging.getLogger(__name__)
+
+# Icons for built-in diagnostic sensor entities
+DIAGNOSTIC_ICONS = {
+    "sn": "mdi:barcode",
+    "sn8": "mdi:numeric",
+    "device_id": "mdi:identifier",
+}
 
 
 def safe_key(key: str) -> str:
@@ -215,3 +224,130 @@ class MideaThingEntity(CoordinatorEntity[MideaThingDataCoordinator], Entity):
     def available(self) -> bool:
         """返回设备是否可用。"""
         return self.coordinator.data is not None
+
+
+class MideaDiagnosticSensor(CoordinatorEntity[MideaDataUpdateCoordinator], SensorEntity):
+    """Read-only device built-in diagnostic sensor (sn/sn8/device_id)."""
+
+    _attr_has_entity_name = True
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+
+    def __init__(
+        self,
+        coordinator: MideaDataUpdateCoordinator,
+        device,
+        diag_key: str,
+    ) -> None:
+        super().__init__(coordinator)
+        self._device = device
+        self._diag_key = diag_key
+        self._attr_translation_key = diag_key
+        self._attr_icon = DIAGNOSTIC_ICONS.get(diag_key, "mdi:information-outline")
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, str(device.device_id))},
+            model=device.model,
+            serial_number=device.sn,
+            manufacturer="Midea",
+            name=device.device_name,
+        )
+
+    @property
+    def native_value(self) -> str | None:
+        """Return the diagnostic value."""
+        if self._diag_key == "sn":
+            return self._device.sn
+        if self._diag_key == "sn8":
+            return self._device.sn8
+        if self._diag_key == "device_id":
+            return str(self._device.device_id)
+        return None
+
+
+class MideaDiagnosticBinarySensor(CoordinatorEntity[MideaDataUpdateCoordinator], BinarySensorEntity):
+    """Read-only device online status diagnostic entity."""
+
+    _attr_has_entity_name = True
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+    _attr_device_class = BinarySensorDeviceClass.CONNECTIVITY
+    _attr_translation_key = "online"
+
+    def __init__(
+        self,
+        coordinator: MideaDataUpdateCoordinator,
+        device,
+    ) -> None:
+        super().__init__(coordinator)
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, str(device.device_id))},
+            model=device.model,
+            serial_number=device.sn,
+            manufacturer="Midea",
+            name=device.device_name,
+        )
+
+    @property
+    def is_on(self) -> bool:
+        """Return whether the device is connected."""
+        return bool(self.coordinator.data and self.coordinator.data.connected)
+
+
+class MideaThingDiagnosticSensor(CoordinatorEntity[MideaThingDataCoordinator], SensorEntity):
+    """Thing device built-in diagnostic sensor (sn/sn8/device_id)."""
+
+    _attr_has_entity_name = True
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+
+    def __init__(
+        self,
+        coordinator: MideaThingDataCoordinator,
+        diag_key: str,
+    ) -> None:
+        super().__init__(coordinator)
+        self._diag_key = diag_key
+        info = coordinator._device_info or {}
+        self._info = info
+        self._attr_translation_key = diag_key
+        self._attr_icon = DIAGNOSTIC_ICONS.get(diag_key, "mdi:information-outline")
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, str(coordinator.appliance_code))},
+            name=info.get("name", "Midea Device"),
+            manufacturer=info.get("manufacturer", "Midea"),
+            model=info.get("model"),
+            serial_number=info.get("sn"),
+        )
+
+    @property
+    def native_value(self) -> str | None:
+        """Return the diagnostic value."""
+        if self._diag_key == "sn":
+            return self._info.get("sn")
+        if self._diag_key == "sn8":
+            return self._info.get("sn8")
+        if self._diag_key == "device_id":
+            return str(self.coordinator.appliance_code)
+        return None
+
+
+class MideaThingDiagnosticBinarySensor(CoordinatorEntity[MideaThingDataCoordinator], BinarySensorEntity):
+    """Thing device online status diagnostic entity."""
+
+    _attr_has_entity_name = True
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+    _attr_device_class = BinarySensorDeviceClass.CONNECTIVITY
+    _attr_translation_key = "online"
+
+    def __init__(self, coordinator: MideaThingDataCoordinator) -> None:
+        super().__init__(coordinator)
+        info = coordinator._device_info or {}
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, str(coordinator.appliance_code))},
+            name=info.get("name", "Midea Device"),
+            manufacturer=info.get("manufacturer", "Midea"),
+            model=info.get("model"),
+            serial_number=info.get("sn"),
+        )
+
+    @property
+    def is_on(self) -> bool:
+        """Return whether the device is reachable."""
+        return self.coordinator.last_update_success

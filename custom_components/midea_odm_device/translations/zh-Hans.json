@@ -78,10 +78,14 @@
             "filter_remaining_days_slot2": { "name": "生化滤材剩余天数" },
             "filter_remaining_percent_slot2": { "name": "生化滤材剩余比例" },
             "filter_install_time_slot1": { "name": "物理滤材最近更换时间" },
-            "filter_install_time_slot2": { "name": "生化滤材最近更换时间" }
+            "filter_install_time_slot2": { "name": "生化滤材最近更换时间" },
+            "sn": { "name": "SN" },
+            "sn8": { "name": "SN8" },
+            "device_id": { "name": "Device ID" }
         },
         "binary_sensor": {
-            "water_temperature_state": { "name": "水温状态" }
+            "water_temperature_state": { "name": "水温状态" },
+            "online": { "name": "设备状态" }
         },
         "switch": {
             "power": { "name": "鱼缸总开关" },
