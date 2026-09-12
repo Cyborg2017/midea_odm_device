@@ -1,6 +1,11 @@
 """T0xBC 空气检测仪设备映射定义"""
-from homeassistant.const import Platform, CONCENTRATION_PARTS_PER_MILLION, CONCENTRATION_MICROGRAMS_PER_CUBIC_METER, UnitOfTemperature
+from homeassistant.const import Platform, UnitOfTemperature
 from homeassistant.components.sensor import SensorStateClass, SensorDeviceClass
+
+from ..compat import (
+    CONCENTRATION_MICROGRAMS_PER_CUBIC_METER,
+    CONCENTRATION_PARTS_PER_MILLION,
+)
 
 # Only devices with these SN8 codes are supported
 SUPPORTED_SN8 = {"ECGDN1MD"}
