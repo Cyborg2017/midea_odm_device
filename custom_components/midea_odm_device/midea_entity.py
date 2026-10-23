@@ -222,8 +222,12 @@ class MideaThingEntity(CoordinatorEntity[MideaThingDataCoordinator], Entity):
 
     @property
     def available(self) -> bool:
-        """返回设备是否可用。"""
-        return self.coordinator.data is not None
+        """返回设备是否可用（基于云端真实在线状态）。"""
+        return (
+            self.coordinator.data is not None
+            and self.coordinator.last_update_success
+            and getattr(self.coordinator, "device_online", True)
+        )
 
 
 class MideaDiagnosticSensor(CoordinatorEntity[MideaDataUpdateCoordinator], SensorEntity):
@@ -349,5 +353,9 @@ class MideaThingDiagnosticBinarySensor(CoordinatorEntity[MideaThingDataCoordinat
 
     @property
     def is_on(self) -> bool:
-        """Return whether the device is reachable."""
-        return self.coordinator.last_update_success
+        """Return whether the device is reachable.
+
+        在线实体本身必须保持可见，否则设备离线时会变成 unavailable
+        而无法展示“已断开”。
+        """
+        return bool(self.coordinator.last_update_success and self.coordinator.device_online)

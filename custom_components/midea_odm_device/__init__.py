@@ -322,6 +322,8 @@ async def _init_thing_device(
         specific_endpoints=specific_endpoints,
     )
     coordinator._device_info = info
+    # 以设备列表返回的初始在线状态作为起点，后续由轮询中的定期校验更新
+    coordinator._device_online = bool(info.get("online", True))
 
     await coordinator.async_config_entry_first_refresh()
 

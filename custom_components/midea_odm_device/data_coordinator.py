@@ -157,9 +157,50 @@ class MideaThingDataCoordinator(DataUpdateCoordinator[dict]):
         self.quick_endpoint_keys = quick_endpoint_keys
         self._pending_updates: dict = {}
         self._last_successful_data: dict | None = None
+        self._device_info: dict = {}
+        # 设备真实在线状态（初次取设备列表的 online 字段）
+        self._device_online: bool = True
+        self._online_check_counter = 0
+        self._online_check_interval = 15
+
+    @property
+    def device_online(self) -> bool:
+        """返回设备真实在线状态。"""
+        return self._device_online
+
+    def set_device_online(self, online: bool) -> None:
+        """更新设备真实在线状态，变化时推送数据以刷新实体。"""
+        if online != self._device_online:
+            _LOGGER.info(
+                f"Thing 设备 {self.appliance_code} 在线状态变更: "
+                f"{self._device_online} -> {online}"
+            )
+            self._device_online = online
+            if self.data is not None:
+                self.async_set_updated_data(self.data)
+
+    async def _check_device_online_status(self) -> None:
+        """通过云端设备列表检查设备真实在线状态。"""
+        if not self.cloud:
+            return
+        try:
+            appliances = await self.cloud.list_appliances(self.home_group_id)
+            if not appliances:
+                return
+            device_info = appliances.get(int(self.appliance_code))
+            if device_info:
+                self.set_device_online(device_info.get("online", False))
+        except Exception as e:
+            _LOGGER.warning(f"检查 Thing 设备 {self.appliance_code} 在线状态失败: {e}")
 
     async def _async_update_data(self) -> dict:
         """拉取设备数据：Thing 属性 + 设备专用端点，合并后返回。"""
+        # 定期检查设备真实在线状态
+        self._online_check_counter += 1
+        if self._online_check_counter >= self._online_check_interval:
+            self._online_check_counter = 0
+            await self._check_device_online_status()
+
         try:
             # 查询 Thing 属性
             thing_properties = await self.api.query_properties(self.appliance_code)
