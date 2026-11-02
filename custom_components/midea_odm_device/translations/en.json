@@ -122,7 +122,7 @@
             "curtain": { "name": "Curtain" }
         }
     },
-    "common": {
+    "state": {
         "delay_10s": "10s",
         "delay_30s": "30s",
         "delay_1min": "1min",
