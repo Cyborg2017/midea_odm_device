@@ -109,12 +109,45 @@
             "silent_end_time": { "name": "免打扰结束时间" }
         },
         "select": {
-            "water_pump_disconnect_delay_time": { "name": "水泵断开延迟提醒时间" },
-            "water_pump_pause_time": { "name": "喂食保护时间" },
-            "motor_speed": { "name": "电机速度" }
+            "water_pump_disconnect_delay_time": {
+                "name": "水泵断开延迟提醒时间",
+                "state": {
+                    "delay_10s": "10秒",
+                    "delay_30s": "30秒",
+                    "delay_1min": "1分钟",
+                    "delay_5min": "5分钟"
+                }
+            },
+            "water_pump_pause_time": {
+                "name": "喂食保护时间",
+                "state": {
+                    "pause_3min": "3分钟",
+                    "pause_5min": "5分钟",
+                    "pause_10min": "10分钟",
+                    "pause_15min": "15分钟"
+                }
+            },
+            "motor_speed": {
+                "name": "电机速度",
+                "state": {
+                    "motor_speed_silent": "静音",
+                    "motor_speed_medium": "中速",
+                    "motor_speed_fast": "快速"
+                }
+            }
         },
         "light": {
-            "light": { "name": "灯光" }
+            "light": {
+                "name": "灯光",
+                "state": {
+                    "light_scene_0": "熔光炫日",
+                    "light_scene_1": "银幕白璧",
+                    "light_scene_2": "南极冰海",
+                    "light_scene_3": "深海热泉",
+                    "light_scene_4": "光合作用",
+                    "light_scene_5": "彩虹流光"
+                }
+            }
         },
         "button": {
             "manual_feed": { "name": "手动喂食" }
@@ -122,24 +155,5 @@
         "cover": {
             "curtain": { "name": "窗帘" }
         }
-    },
-    "state": {
-        "delay_10s": "10秒",
-        "delay_30s": "30秒",
-        "delay_1min": "1分钟",
-        "delay_5min": "5分钟",
-        "pause_3min": "3分钟",
-        "pause_5min": "5分钟",
-        "pause_10min": "10分钟",
-        "pause_15min": "15分钟",
-        "motor_speed_silent": "静音",
-        "motor_speed_medium": "中速",
-        "motor_speed_fast": "快速",
-        "light_scene_0": "熔光炫日",
-        "light_scene_1": "银幕白璧",
-        "light_scene_2": "南极冰海",
-        "light_scene_3": "深海热泉",
-        "light_scene_4": "光合作用",
-        "light_scene_5": "彩虹流光"
     }
 }

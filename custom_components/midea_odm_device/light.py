@@ -17,10 +17,8 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.translation import async_get_translations
 
-from .const import DOMAIN
-from .midea_entity import MideaThingEntity
+from .midea_entity import MideaThingEntity, async_load_state_labels
 from .platform_setup import (
     async_setup_platform_entities,
     async_setup_thing_entities,
@@ -70,20 +68,13 @@ class MideaThingLight(MideaThingEntity, LightEntity):
             return
         if len(self._scenes_translation_keys) != len(self._scenes):
             return
-        translations = await async_get_translations(
-            self.hass, self.hass.config.language, "state", {DOMAIN}
+        translations = await async_load_state_labels(
+            self.hass, "light", self._config.get("translation_key")
         )
-        # 翻译键直接对应 state 下的 slug，形如 "component.<domain>.state.<key>"
-        prefix = f"component.{DOMAIN}.state."
-        mapping = {
-            key[len(prefix):]: value
-            for key, value in translations.items()
-            if key.startswith(prefix)
-        }
-        if not mapping:
+        if not translations:
             return
         self._scene_labels = {
-            idx: mapping.get(key, key)
+            idx: translations.get(key, key)
             for idx, key in zip(self._scenes, self._scenes_translation_keys)
         }
         self._attr_effect_list = list(self._scene_labels.values())

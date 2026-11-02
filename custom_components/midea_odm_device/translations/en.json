@@ -109,12 +109,45 @@
             "silent_end_time": { "name": "Silent End Time" }
         },
         "select": {
-            "water_pump_disconnect_delay_time": { "name": "Water Pump Disconnect Delay Time" },
-            "water_pump_pause_time": { "name": "Feed Protection Time" },
-            "motor_speed": { "name": "Motor Speed" }
+            "water_pump_disconnect_delay_time": {
+                "name": "Water Pump Disconnect Delay Time",
+                "state": {
+                    "delay_10s": "10s",
+                    "delay_30s": "30s",
+                    "delay_1min": "1min",
+                    "delay_5min": "5min"
+                }
+            },
+            "water_pump_pause_time": {
+                "name": "Feed Protection Time",
+                "state": {
+                    "pause_3min": "3min",
+                    "pause_5min": "5min",
+                    "pause_10min": "10min",
+                    "pause_15min": "15min"
+                }
+            },
+            "motor_speed": {
+                "name": "Motor Speed",
+                "state": {
+                    "motor_speed_silent": "Silent",
+                    "motor_speed_medium": "Medium",
+                    "motor_speed_fast": "Fast"
+                }
+            }
         },
         "light": {
-            "light": { "name": "Light" }
+            "light": {
+                "name": "Light",
+                "state": {
+                    "light_scene_0": "Brilliant Sun",
+                    "light_scene_1": "Silver Screen",
+                    "light_scene_2": "Antarctic Sea",
+                    "light_scene_3": "Deep Sea Hot Spring",
+                    "light_scene_4": "Photosynthesis",
+                    "light_scene_5": "Rainbow Flow"
+                }
+            }
         },
         "button": {
             "manual_feed": { "name": "Manual Feed" }
@@ -122,24 +155,5 @@
         "cover": {
             "curtain": { "name": "Curtain" }
         }
-    },
-    "state": {
-        "delay_10s": "10s",
-        "delay_30s": "30s",
-        "delay_1min": "1min",
-        "delay_5min": "5min",
-        "pause_3min": "3min",
-        "pause_5min": "5min",
-        "pause_10min": "10min",
-        "pause_15min": "15min",
-        "motor_speed_silent": "Silent",
-        "motor_speed_medium": "Medium",
-        "motor_speed_fast": "Fast",
-        "light_scene_0": "Brilliant Sun",
-        "light_scene_1": "Silver Screen",
-        "light_scene_2": "Antarctic Sea",
-        "light_scene_3": "Deep Sea Hot Spring",
-        "light_scene_4": "Photosynthesis",
-        "light_scene_5": "Rainbow Flow"
     }
 }

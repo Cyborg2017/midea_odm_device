@@ -16,8 +16,10 @@ from typing import Any
 
 from homeassistant.components.binary_sensor import BinarySensorDeviceClass, BinarySensorEntity
 from homeassistant.components.sensor import SensorEntity
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity import Entity, EntityCategory
+from homeassistant.helpers.translation import async_get_translations
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
@@ -36,6 +38,26 @@ DIAGNOSTIC_ICONS = {
 def safe_key(key: str) -> str:
     """将含点的属性键转为 HA 实体唯一 ID 安全字符串。"""
     return key.replace(".", "_").replace(" ", "_").lower()
+
+
+async def async_load_state_labels(
+    hass: HomeAssistant, platform: str, translation_key: str | None
+) -> dict[str, str]:
+    """读取 entity.<platform>.<translation_key>.state 下的选项标签翻译。
+
+    返回 {slug: 显示文本}，翻译缺失时返回空字典，由调用方兜底。
+    """
+    if not translation_key:
+        return {}
+    translations = await async_get_translations(
+        hass, hass.config.language, "entity", {DOMAIN}
+    )
+    prefix = f"component.{DOMAIN}.entity.{platform}.{translation_key}.state."
+    return {
+        key[len(prefix):]: value
+        for key, value in translations.items()
+        if key.startswith(prefix)
+    }
 
 
 def _extract_rest_value(
