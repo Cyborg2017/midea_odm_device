@@ -1,6 +1,7 @@
 """T0x14 电动窗帘设备映射定义"""
 from homeassistant.components.cover import CoverDeviceClass
-from homeassistant.const import Platform
+from homeassistant.components.sensor import SensorStateClass
+from homeassistant.const import PERCENTAGE, Platform
 
 DEVICE_MAPPING = {
     "default": {
@@ -21,6 +22,15 @@ DEVICE_MAPPING = {
                     },
                     "device_class": CoverDeviceClass.CURTAIN,
                     "icon": "mdi:curtains",
+                }
+            },
+            Platform.SENSOR: {
+                "electricCurtain.currentOpeningPercentage": {
+                    "translation_key": "curtain_opening_percentage",
+                    "thing_key": "electricCurtain.currentOpeningPercentage",
+                    "state_class": SensorStateClass.MEASUREMENT,
+                    "unit": PERCENTAGE,
+                    "icon": "mdi:percent",
                 }
             },
             Platform.SWITCH: {

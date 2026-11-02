@@ -79,6 +79,7 @@
             "filter_remaining_percent_slot2": { "name": "Biological Filter Remaining Percent" },
             "filter_install_time_slot1": { "name": "Physical Filter Last Replacement Time" },
             "filter_install_time_slot2": { "name": "Biological Filter Last Replacement Time" },
+            "curtain_opening_percentage": { "name": "Curtain Opening" },
             "sn": { "name": "SN" },
             "sn8": { "name": "SN8" },
             "device_id": { "name": "Device ID" }
